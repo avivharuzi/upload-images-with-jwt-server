@@ -35,7 +35,11 @@ class ImageController {
                     if (err) {
                         reject(err);
                     } else {
-                        resolve(image);
+                        if (image !== null) {
+                            resolve(image);
+                        } else {
+                            reject(['No image found']);
+                        }
                     }
                 });
         });
