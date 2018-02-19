@@ -4,7 +4,13 @@ const validationHandler = require('./../handlers/validation.handler');
 class UserController {
     static setUser(user) {
         return new Promise((resolve, reject) => {
-            User.create(user, (err, newUser) => {
+            User.create({
+                userName: user.userName.toLowerCase(),
+                firstName: user.firstName,
+                lastName: user.lastName,
+                email: user.email.toLowerCase(),
+                password: user.password,
+            }, (err, newUser) => {
                 if (err) {
                     reject(err);
                 } else {
@@ -17,7 +23,7 @@ class UserController {
     static checkUser(user) {
         return new Promise((resolve, reject) => {
             User.findOne({
-                userName: user.userName,
+                userName: user.userName.toLowerCase(),
                 password: user.password
             }, (err, userExist) => {
                 if (err) {
@@ -37,7 +43,7 @@ class UserController {
         return new Promise((resolve, reject) => {
             let errors = [];
 
-            if (!validationHandler.regex(user.userName, /^[A-Za-z0-9_]{2,55}$/)) {
+            if (!validationHandler.regex(user.userName.toLowerCase(), /^[a-z0-9_]{2,55}$/)) {
                 errors.push('Username is invalid');
             }
 
@@ -49,7 +55,7 @@ class UserController {
                 errors.push('Last name is invalid');
             }
 
-            if (!validationHandler.regex(user.email, /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/)) {
+            if (!validationHandler.regex(user.email.toLowerCase(), /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/)) {
                 errors.push('Email is invalid');
             }
 
@@ -71,7 +77,7 @@ class UserController {
     static checkUserByUserName(user) {
         return new Promise((resolve, reject) => {
             User.findOne({
-                userName: user.userName
+                userName: user.userName.toLowerCase()
             }, (err, userExist) => {
                 if (err) {
                     reject(err);
@@ -89,7 +95,7 @@ class UserController {
     static checkUserByEmail(user) {
         return new Promise((resolve, reject) => {
             User.findOne({
-                email: user.email
+                email: user.email.toLowerCase()
             }, (err, userExist) => {
                 if (err) {
                     reject(err);
