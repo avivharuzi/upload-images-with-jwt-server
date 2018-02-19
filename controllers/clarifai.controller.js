@@ -3,7 +3,7 @@ const fileHandler = require('./../handlers/file.handler');
 const Clarifai = require('clarifai');
 
 const clarifaiApp = new Clarifai.App({
-    apiKey: 'f2522ccb7abc40858c0ecce40fa7864b'
+    apiKey: process.env.CLARIFAI_API_KEY
 });
 
 class ClarifaiController {

@@ -8,15 +8,13 @@ class AuthHandler {
     
         if (req.headers.authorization !== undefined) {
             let token = req.headers.authorization
-    
-            jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
-                if (err) {
-                    res.status(401).end();
-                }
 
-                req.userData = decoded;
-                next();
-            });
+            AuthHandler.checkUserToken(token)
+                .then((decoded) => {
+                    req.userData = decoded;
+                    next();
+                })
+                .catch(() => res.status(401).end());
         } else {
             res.status(401).send();
         }
@@ -31,6 +29,18 @@ class AuthHandler {
                     resolve(token);
                 }
             }); 
+        });
+    }
+
+    static checkUserToken(token) {
+        return new Promise((resolve,reject) => {
+            jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(decoded);
+                }
+            });
         });
     }
 }
