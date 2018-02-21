@@ -23,17 +23,21 @@ class UserController {
     static checkUser(user) {
         return new Promise((resolve, reject) => {
             User.findOne({
-                userName: user.userName.toLowerCase(),
-                password: user.password
+                userName: user.userName.toLowerCase()
             }, (err, userExist) => {
                 if (err) {
                     reject(err);
-                } else {
-                    if (userExist !== null) {
-                        resolve(userExist);
-                    } else {
+                } else if (userExist !== null) {
+                    userExist.comparePassword(user.password, (error, isMatch) => {
+                        if (error) {
+                            reject(error);
+                        } else if (isMatch) {
+                            resolve(userExist);
+                        }
                         reject(['The username or password you have entered is invalid']);
-                    }
+                    });
+                } else {
+                    reject(['The username or password you have entered is invalid']);
                 }
             });
         });
