@@ -4,12 +4,18 @@ const validationHandler = require('./../handlers/validation.handler');
 class UserController {
     static setUser(user) {
         return new Promise((resolve, reject) => {
+            const _userName = validationHandler.testInput(user.userName.toLowerCase());
+            const _firstName = validationHandler.testInput(user.firstName);
+            const _lastName = validationHandler.testInput(user.lastName);
+            const _email = validationHandler.testInput(user.email.toLowerCase());
+            const _password = validationHandler.testInput(user.password);
+
             User.create({
-                userName: user.userName.toLowerCase(),
-                firstName: user.firstName,
-                lastName: user.lastName,
-                email: user.email.toLowerCase(),
-                password: user.password,
+                userName: _userName,
+                firstName: _firstName,
+                lastName: _lastName,
+                email: _email,
+                password: _password,
             }, (err, newUser) => {
                 if (err) {
                     reject(err);
@@ -59,7 +65,7 @@ class UserController {
                 errors.push('Last name is invalid');
             }
 
-            if (!validationHandler.regex(user.email.toLowerCase(), /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/)) {
+            if (!validationHandler.isEmail(user.email.toLowerCase())) {
                 errors.push('Email is invalid');
             }
 
