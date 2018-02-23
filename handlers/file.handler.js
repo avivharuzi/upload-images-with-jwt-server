@@ -71,7 +71,7 @@ class FileHandler {
         });
     }
 
-    static moveFiles(files, path = 'public/images/') {
+    static moveFiles(files, path = process.env.IMAGES_PATH) {
         return new Promise((resolve, reject) => {
             let newFileNames = [];
             let i = 0;
@@ -112,7 +112,7 @@ class FileHandler {
     }
 
     static getPath(file) {
-        return Promise.resolve('public/images/' + file.src);
+        return Promise.resolve(process.env.IMAGES_PATH + file.src);
     }
 
     static convertToBase64(path, image) {
