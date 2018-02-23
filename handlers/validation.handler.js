@@ -1,5 +1,7 @@
 class ValidationHandler {
-    static EMAIL_REGEX = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/;
+	static get EMAIL_REGEX() {
+		return /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/;
+    }
 
     static regex(value, reg) {
         if (value !== '') {
@@ -15,7 +17,7 @@ class ValidationHandler {
 
     static isEmail(value) {
         if (value !== '') {
-            if (EMAIL_REGEX.test(value)) {
+            if (ValidationHandler.EMAIL_REGEX.test(value)) {
                 return true;
             } else {
                 return false;
@@ -28,7 +30,7 @@ class ValidationHandler {
     static testInput(data) {
         data = data.trim();
         data = ValidationHandler.stripslashes(data);
-        data = htmlspecialchars(data);
+        data = ValidationHandler.htmlspecialchars(data);
         return data;
     }
 
