@@ -16,6 +16,8 @@ user
 
 ### .env
 
+PORT
+
 JWT_SECRET
 
 CLARIFAI_API_KEY
