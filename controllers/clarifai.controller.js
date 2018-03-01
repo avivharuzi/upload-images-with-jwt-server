@@ -1,4 +1,4 @@
-const fileHandler = require('./../handlers/file.handler');
+const FileHandler = require('./../handlers/file.handler');
 
 const Clarifai = require('clarifai');
 
@@ -9,7 +9,7 @@ const clarifaiApp = new Clarifai.App({
 class ClarifaiController {
     static getConceptsByImage(image) {
         return new Promise((resolve, reject) => {
-            let imageBase64  = fileHandler.convertToBase64(process.env.IMAGES_PATH, image.src);
+            let imageBase64  = FileHandler.convertToBase64(process.env.IMAGES_PATH, image.src);
 
             clarifaiApp.models.predict(Clarifai.GENERAL_MODEL, { base64: imageBase64 })
                 .then((response) => {

@@ -1,14 +1,14 @@
 const User = require('./../models/user.model');
-const validationHandler = require('./../handlers/validation.handler');
+const ValidationHandler = require('./../handlers/validation.handler');
 
 class UserController {
     static setUser(user) {
         return new Promise((resolve, reject) => {
-            const _userName = validationHandler.testInput(user.userName.toLowerCase());
-            const _firstName = validationHandler.testInput(user.firstName);
-            const _lastName = validationHandler.testInput(user.lastName);
-            const _email = validationHandler.testInput(user.email.toLowerCase());
-            const _password = validationHandler.testInput(user.password);
+            const _userName = ValidationHandler.testInput(user.userName.toLowerCase());
+            const _firstName = ValidationHandler.testInput(user.firstName);
+            const _lastName = ValidationHandler.testInput(user.lastName);
+            const _email = ValidationHandler.testInput(user.email.toLowerCase());
+            const _password = ValidationHandler.testInput(user.password);
 
             User.create({
                 userName: _userName,
@@ -53,23 +53,23 @@ class UserController {
         return new Promise((resolve, reject) => {
             let errors = [];
 
-            if (!validationHandler.regex(user.userName.toLowerCase(), /^[a-z0-9_]{2,55}$/)) {
+            if (!ValidationHandler.regex(user.userName.toLowerCase(), /^[a-z0-9_]{2,55}$/)) {
                 errors.push('Username is invalid');
             }
 
-            if (!validationHandler.regex(user.firstName, /^[A-Za-z]{2,30}$/)) {
+            if (!ValidationHandler.regex(user.firstName, /^[A-Za-z]{2,30}$/)) {
                 errors.push('First name is invalid');
             }
 
-            if (!validationHandler.regex(user.lastName, /^[A-Za-z]{2,30}$/)) {
+            if (!ValidationHandler.regex(user.lastName, /^[A-Za-z]{2,30}$/)) {
                 errors.push('Last name is invalid');
             }
 
-            if (!validationHandler.isEmail(user.email.toLowerCase())) {
+            if (!ValidationHandler.isEmail(user.email.toLowerCase())) {
                 errors.push('Email is invalid');
             }
 
-            if (!validationHandler.regex(user.password, /^[A-Za-z0-9!@#$%^&*()_]{6,55}$/)) {
+            if (!ValidationHandler.regex(user.password, /^[A-Za-z0-9!@#$%^&*()_]{6,55}$/)) {
                 errors.push('Password is invalid');
             }
 

@@ -8,7 +8,7 @@ const helmet = require('helmet');
 const cors = require('cors');
 const path = require('path');
 
-const authHandler = require('./handlers/auth.handler');
+const AuthHandler = require('./handlers/auth.handler');
 
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://127.0.0.1:27017/gallery');
@@ -29,7 +29,7 @@ app.use(fileUpload());
 app.use('/assets/images', express.static(path.join(__dirname, 'public','images')));
 
 app.use('/', userRoute);
-app.use('/api', authHandler.authenticate);
+app.use('/api', AuthHandler.authenticate);
 app.use('/api/image', imageRoute);
 
 module.exports = app;
