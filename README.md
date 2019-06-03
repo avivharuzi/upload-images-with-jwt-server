@@ -1,6 +1,6 @@
-# upload-images-with-jwt-server
+# Upload Images With JWT Server
 
-gallery project with node.js and angular 5 server side
+Gallery project with Node.js and Angular 5, server side.
 
 ## To make project work as well you need to create
 
@@ -14,7 +14,7 @@ image
 
 user
 
-### .env
+### .env File
 
 PORT
 
